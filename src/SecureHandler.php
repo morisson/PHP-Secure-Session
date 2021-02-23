@@ -84,7 +84,7 @@ class SecureHandler extends SessionHandler
     {
 
 
-	$nonce = sodium_randombytes_buf( SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+	$nonce = random_bytes( SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
         $ciphertext = sodium_crypto_secretbox($data, $nonce, $key);
         if ($ciphertext === false) {
              throw new \Exception('Unable to encrypt');
@@ -127,7 +127,7 @@ class SecureHandler extends SessionHandler
         if (empty($_COOKIE[$name])) {
             $key = sodium_crypto_secretbox_keygen();
             $cookieParam = session_get_cookie_params();
-            $encKey      = sodium_bin2base64($key,SODIUM_BASE64_VARIANT_URLSAFE);
+            $encKey      = base64_encode($key);
             setcookie(
                 $name,
                 $encKey,
@@ -142,7 +142,7 @@ class SecureHandler extends SessionHandler
             );
             $_COOKIE[$name] = $encKey;
         } else {
-            $key = sodium_base642bin($_COOKIE[$name],SODIUM_BASE64_VARIANT_URLSAFE);
+            $key = base64_decode($_COOKIE[$name]);
             if ($key === false) {
                 throw new \Exception('Can\'t retrieve key from cookie');
             }
