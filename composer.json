@@ -10,7 +10,7 @@
   "homepage": "https://github.com/ezimuel/PHP-Secure-Session",
   "require": {
       "php": "^5.6 || ^7.0",
-      "ext-openssl": "*",
+      "ext-sodium": "*",
       "ext-mbstring": "*",
       "paragonie/random_compat": "^2.0.2"
   },
